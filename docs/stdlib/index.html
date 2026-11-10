@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PIPI Standard Libraries & PIPIwood</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#141d32;--ink:#edf3ff;--muted:#a9b7d0;--accent:#8b9dff;--line:#2c3a59}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(140deg,#101a35,var(--bg) 50%);color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:1040px;margin:auto;padding:42px 22px 72px}h1{font-size:clamp(2.3rem,7vw,4.2rem);line-height:1.04;margin:8px 0 14px}h2{margin:38px 0 12px}p{color:var(--muted)}.tag{color:#b7c1ff;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;font-weight:700}.lead{font-size:1.1rem;max-width:760px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:22px}.card{background:rgba(20,29,50,.92);border:1px solid var(--line);border-radius:16px;padding:18px}.card h3{margin:0 0 5px;color:#cbd4ff}.card code{font-size:.9rem;color:#b3efdf}pre{overflow:auto;background:#080d19;border:1px solid var(--line);border-radius:12px;padding:16px;color:#e4eaff}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.note{border-left:3px solid var(--accent);padding:10px 16px;background:rgba(139,157,255,.08);color:var(--muted)}a{color:#b7c1ff}footer{margin-top:52px;border-top:1px solid var(--line);padding-top:20px;color:var(--muted)}
+</style></head>
+<body><main>
+<div class="tag">PIPI v1.0.0 · Standard library</div>
+<h1>Useful batteries.<br>Native speed. 🌲</h1>
+<p class="lead">The PIPI standard library is built from portable C89 modules. Each module is independent, has a declared export surface, and can be distributed as a verified <code>.woodlib</code> package with PIPIwood.</p>
+<h2>Included libraries</h2>
+<div class="grid">
+<section class="card"><h3>pipi/net</h3><p>Blocking IPv4 TCP/UDP sockets, client and server primitives.</p><code>socketCreate · socketConnect · socketBind · socketListen · socketAccept · socketSend · socketRecv · socketClose</code></section>
+<section class="card"><h3>pipi/http</h3><p>Small plain HTTP/1.0 GET helper.</p><code>httpGet(host, path, port)</code></section>
+<section class="card"><h3>pipi/fs</h3><p>Text files, basic copy/move/delete and directory creation.</p><code>fileRead · fileWrite · fileAppend · fileCopy · fileMove · fileDelete</code></section>
+<section class="card"><h3>pipi/time</h3><p>Unix time, millisecond timer, sleep and formatting.</p><code>timeUnix · timeMillis · sleepMs · timeFormat</code></section>
+<section class="card"><h3>pipi/string</h3><p>Text inspection, replacement, case conversion and trimming.</p><code>strContains · strIndexOf · strUpper · strLower · strTrim · strReplace</code></section>
+<section class="card"><h3>pipi/encoding</h3><p>URL and hexadecimal text encoding/decoding.</p><code>urlEncode · urlDecode · hexEncode · hexDecode</code></section>
+<section class="card"><h3>pipi/system</h3><p>OS name, CPU architecture, environment and process info.</p><code>osName · architecture · envGet · currentDirectory · processId</code></section>
+<section class="card"><h3>pipi/crypto</h3><p>SHA-256 digest and CRC32 checksum helpers.</p><code>sha256 · crc32</code></section>
+<section class="card"><h3>pipi/path</h3><p>Join and inspect common filesystem paths.</p><code>pathJoin · pathBasename · pathDirname · pathExtension</code></section>
+<section class="card"><h3>pipi/json</h3><p>Read JSON scalar properties from objects and escape output text.</p><code>jsonHasKey · jsonGetString · jsonGetNumber · jsonGetBoolean · jsonType · jsonEscape</code></section>
+<section class="card"><h3>pipi/random</h3><p>Seedable pseudo-random integers, floats and booleans.</p><code>randomSeed · randomInt · randomFloat · randomBool</code></section>
+<section class="card"><h3>pipi/terminal</h3><p>Line input, text output, ANSI colors and TTY detection.</p><code>terminalWrite · terminalWriteLine · terminalReadLine · terminalColor · terminalIsTTY</code></section>
+</div>
+<h2>Install a library</h2>
+<pre><code>pipiwood list dist/woodlibs/pipi_net.woodlib
+pipiwood verify dist/woodlibs/pipi_net.woodlib
+pipiwood install dist/woodlibs/pipi_net.woodlib
+
+# Then in a .pipi source file:
+import { socketCreate, socketConnect } from "pipi/net";</code></pre>
+<h2>Make a .woodlib package</h2>
+<pre><code>pipiwood pack files.lst -o acme_greeting.woodlib
+pipiwood verify acme_greeting.woodlib
+pipiwood install acme_greeting.woodlib</code></pre>
+<p class="note">PIPIwood validates relative archive paths and checks each file's CRC32 before extraction. CRC is not a digital signature: only install native modules from publishers you trust. Full package format and third-party development guide: <a href="../WOODLIB.md">WOODLIB specification</a>.</p>
+<h2>Compatibility notes</h2>
+<p>All native module sources target C89 and the stable PIPI Native Module ABI v1. Build packages for the machine architecture you intend to run on. Termux/Android ARM64 must build its own <code>linux-aarch64</code> native modules; an x86-64 Linux <code>.woodlib</code> is not a universal binary.</p>
+<p>HTTP is plain HTTP only (no TLS). Networking is blocking IPv4. JSON getters handle scalar members of objects; they do not materialize object/array values. Random functions are not cryptographically secure.</p>
+<footer>PIPI General Language v1.0.0 · <a href="../index.html">Main documentation</a> · <a href="../../README.md">Project README</a></footer>
+</main></body></html>

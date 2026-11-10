@@ -1,0 +1,21 @@
+bin/pipi-c
+bin/pipi-vm
+bin/pipi-c.exe
+bin/pipi-vm.exe
+native/linux-x86_64/*.so
+native/windows-x86_64/*.dll
+dist/*.pbc
+__pycache__/
+*.pyc
+
+bin/pipiwood
+bin/pipiwood.exe
+
+# Platform-specific native binaries and generated package artifacts.
+modules/**/native/**/*.so
+modules/**/native/**/*.dll
+modules/**/native/**/*.dylib
+dist/woodlibs/*.woodlib
+dist/woodlib-lists/
+dist/woodlib-manifests/
+dist/woodlib-test/

@@ -1,0 +1,51 @@
+import { print } from "pipi/core";
+import { socketCreate, socketClose } from "pipi/net";
+import { fileWrite, fileRead, fileSize, fileDelete } from "pipi/fs";
+import { timeUnix, timeFormat } from "pipi/time";
+import { strUpper, strContains, strReplace } from "pipi/string";
+import { urlEncode, urlDecode, hexEncode } from "pipi/encoding";
+import { osName, architecture, currentDirectory } from "pipi/system";
+import { sha256, crc32 } from "pipi/crypto";
+import { pathJoin, pathBasename, pathDirname, pathExtension } from "pipi/path";
+import { jsonHasKey, jsonGetString, jsonGetNumber, jsonGetBoolean, jsonType, jsonEscape } from "pipi/json";
+import { randomSeed, randomInt, randomFloat, randomBool } from "pipi/random";
+import { terminalWriteLine, terminalIsTTY } from "pipi/terminal";
+
+let socket = socketCreate("tcp");
+print("TCP socket handle: " + socket);
+print("Socket closed: " + socketClose(socket));
+
+fileWrite("dist/pipiwood-smoke.txt", "PIPI v1.0.0 woodlib test");
+print("File contents: " + fileRead("dist/pipiwood-smoke.txt"));
+print("File size: " + fileSize("dist/pipiwood-smoke.txt"));
+fileDelete("dist/pipiwood-smoke.txt");
+
+print("Uppercase: " + strUpper("pipi is so back"));
+print("Contains: " + strContains("skibidi toilet", "toilet"));
+print("Replace: " + strReplace("pipi v0.9", "0.9", "1.0"));
+print("URL encoded: " + urlEncode("hello pipi world!"));
+print("URL decoded: " + urlDecode("hello%20pipi%20world%21"));
+print("Hex: " + hexEncode("PIPI"));
+print("SHA-256 abc: " + sha256("abc"));
+print("CRC32 PIPI: " + crc32("PIPI"));
+print("Joined path: " + pathJoin("assets", "sprites/hero.bmp"));
+print("Basename: " + pathBasename("assets/sprites/hero.bmp"));
+print("Dirname: " + pathDirname("assets/sprites/hero.bmp"));
+print("Extension: " + pathExtension("assets/sprites/hero.bmp"));
+print("OS: " + osName() + " / " + architecture());
+print("Current directory: " + currentDirectory());
+print("Unix time: " + timeFormat(timeUnix()));
+
+let payload = "{\"name\":\"PIPI\",\"version\":1.0,\"ready\":true}";
+print("JSON name: " + jsonGetString(payload, "name"));
+print("JSON version: " + jsonGetNumber(payload, "version"));
+print("JSON ready: " + jsonGetBoolean(payload, "ready"));
+print("JSON has name: " + jsonHasKey(payload, "name"));
+print("JSON type: " + jsonType(payload, "name"));
+print("JSON escaped: " + jsonEscape("hello\n\"wood\""));
+randomSeed(1337);
+print("Random int in range: " + randomInt(1, 6));
+print("Random float: " + randomFloat());
+print("Random bool: " + randomBool());
+print("Terminal is TTY: " + terminalIsTTY());
+terminalWriteLine("PIPIwood standard libraries loaded.");

@@ -1,0 +1,6 @@
+import { print } from "pipi/core";
+import { httpGet } from "pipi/http";
+
+/* Plain HTTP only; HTTPS/TLS is not part of this module yet. */
+let response = httpGet("example.com", "/", 80);
+print(response);

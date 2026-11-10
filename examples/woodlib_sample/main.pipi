@@ -1,0 +1,4 @@
+import { print } from "pipi/core";
+import { greet, doubleValue } from "acme/greeting";
+print(greet("bestie"));
+print("doubleValue(21) = " + doubleValue(21));

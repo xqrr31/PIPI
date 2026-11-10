@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0d12">
+<title>PIPI — General Language v1.0 / C89 Standard Libraries</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0d12;--panel:#131722;--panel2:#191e2b;--text:#f4f6ff;--muted:#a3abc1;--line:#2c3448;--pink:#ff5db1;--cyan:#75e7ef;--lime:#c9f58b;--purple:#b7a3ff}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:radial-gradient(ellipse at 8% -8%,#351943 0,transparent 34%),radial-gradient(ellipse at 96% 4%,#123643 0,transparent 30%),var(--bg);color:var(--text);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}.wrap{width:min(1120px,calc(100% - 34px));margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 0;border-bottom:1px solid var(--line)}.brand{font-weight:950;letter-spacing:.13em;font-size:1.15rem}.version{margin-left:8px;border:1px solid #42506a;border-radius:999px;padding:4px 10px;color:var(--lime);font:12px/1.5 ui-monospace,monospace;letter-spacing:0}.nav{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem}.nav a{color:var(--muted)}.hero{padding:74px 0 38px;max-width:940px}.eyebrow{color:var(--pink);font:700 12px/1.4 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}.hero h1{font-size:clamp(2.9rem,8vw,5.8rem);line-height:.98;letter-spacing:-.07em;margin:18px 0}.gradient{background:linear-gradient(105deg,var(--pink),var(--purple) 48%,var(--cyan));color:transparent;background-clip:text}.lead{max-width:800px;color:var(--muted);font-size:1.16rem}.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.btn{display:inline-block;background:var(--text);color:#10131b;border-radius:10px;padding:11px 16px;font-weight:800}.btn.secondary{background:var(--panel);color:var(--text);border:1px solid var(--line)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:26px 0 38px}.card,section{background:linear-gradient(150deg,rgba(25,30,43,.93),rgba(15,18,27,.95));border:1px solid var(--line);border-radius:16px}.card{padding:20px}.card h3{margin:6px 0 6px}.card p{margin:0;color:var(--muted);font-size:.95rem}.icon{color:var(--cyan);font-size:1.4rem}.section{padding:26px;margin:18px 0}.section h2{margin:0 0 8px;font-size:1.55rem;letter-spacing:-.035em}.section h3{margin-top:24px}.muted{color:var(--muted)}code,pre,.tree{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{color:var(--lime);font-size:.92em}pre{overflow:auto;padding:18px;background:#080a0f;border:1px solid #293044;border-radius:12px;color:#e7eaf6;font-size:.9rem;line-height:1.65}pre .kw{color:#ff91ca}pre .str{color:#a9edcc}pre .com{color:#858fa8}.tree{font-size:14px;line-height:1.9;white-space:pre-wrap;background:#080a0f;padding:18px;border-radius:12px;color:#cfd6ea}.tree b{color:var(--cyan)}table{border-collapse:collapse;width:100%;margin-top:14px;font-size:.92rem}th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}th{color:var(--muted)}td:first-child{font-family:ui-monospace,monospace;color:var(--lime)}.pill{display:inline-block;border:1px solid var(--line);border-radius:7px;padding:3px 7px;margin:3px;color:var(--muted);font:12px ui-monospace,monospace}.note{border-left:3px solid var(--pink);padding:10px 14px;background:#211523;border-radius:0 8px 8px 0;color:#e5d8e8}.footer{border-top:1px solid var(--line);margin-top:48px;padding:24px 0 38px;color:var(--muted);font-size:.9rem}@media(max-width:760px){.grid{grid-template-columns:1fr}.hero{padding-top:50px}.nav{gap:10px}.section{padding:18px}.top{align-items:flex-start;flex-direction:column}.brand{display:flex;flex-wrap:wrap;align-items:center}}
+</style>
+</head>
+<body><div class="wrap">
+<header class="top"><div class="brand">PIPI <span class="version">GENERAL LANGUAGE · RELEASE v1.0.0</span></div><nav class="nav"><a href="#start">Start</a><a href="#syntax">Syntax</a><a href="#plugins">Native modules</a><a href="#pdx">PDX game framework</a><a href="stdlib/index.html">Standard libraries</a><a href="WOODLIB.md">PIPIwood</a><a href="GITHUB.md">GitHub publishing</a><a href="#bytecode">Bytecode</a><a href="#layout">Layout</a></nav></header>
+<main>
+<div class="hero"><div class="eyebrow">Playful · Intense · Powerful · Insane</div><h1>One language.<br><span class="gradient">Infinite extensions.</span></h1><p class="lead">PIPI is a general-purpose language with a C89 compiler, its own bytecode and VM, and a versioned native-module ABI. Build a graphics framework, audio engine, database driver, HTTP stack or platform API as a separate module — the core compiler and VM stay untouched.</p><div class="cta"><a class="btn" href="#start">Get started ↓</a><a class="btn secondary" href="#plugins">Build a module ↗</a></div></div>
+<div class="grid"><article class="card"><div class="icon">⌘</div><h3>Custom compiler + VM</h3><p><code>.pipi</code> compiles to <code>PIPIBC06</code>; the C89 VM runs it directly. No Java/JRE/JAR/JNI runtime dependency.</p></article><article class="card"><div class="icon">⇄</div><h3>Native Module ABI v1</h3><p>A stable C ABI lets a new `.so` or `.dll` export functions, receive typed values and call back into PIPI.</p></article><article class="card"><div class="icon">▣</div><h3>Frameworks outside core</h3><p>PDX demonstrates Direct3D 9 / Win32 in an external C++ module. Other modules can target other OS and domains.</p></article></div>
+<section id="start" class="section"><h2>01 / Quick start</h2><p class="muted">Linux: GCC/Clang and X11 development files for the legacy GUI bridge. Windows: MinGW-w64. No Java or Python is needed to compile and run PIPI programs.</p><pre><span class="com"># Linux / POSIX shell</span>
+./build.sh
+bin/pipi-c compile examples/native_module.pipi -o dist/NativeDemo.pbc
+bin/pipi-vm dist/NativeDemo.pbc
+
+<span class="com"># Windows CMD</span>
+build.bat
+bin\pipi-c.exe compile examples\native_module.pipi -o dist\NativeDemo.pbc
+bin\pipi-vm.exe dist\NativeDemo.pbc</pre><p class="muted">The default build compiles a sample third-party native extension and exercises a native-to-PIPI callback. Native modules are looked up using <code>PIPI_MODULE_PATH</code>.</p></section>
+<section id="syntax" class="section"><h2>02 / General-purpose syntax</h2><p class="muted">The v1.0 language subset supports variables, optional type annotations, functions, parameters, return values, arithmetic, comparisons, assignments, branches, loops and module aliases.</p><pre><span class="kw">import</span> { print } <span class="kw">from</span> <span class="str">"pipi/core"</span>;
+<span class="kw">import</span> { clamp <span class="kw">as</span> limit, greet } <span class="kw">from</span> <span class="str">"pipi/extra"</span>;
+
+<span class="kw">fn</span> adjust(score: number) {
+  <span class="kw">if</span> (score > 10) { <span class="kw">return</span> limit(score, 0, 10); }
+  <span class="kw">return</span> score;
+}
+
+<span class="kw">let</span> score: number = 27;
+print(greet(<span class="str">"bestie"</span>));
+print(<span class="str">"normalised = "</span> + adjust(score));</pre><div><span class="pill">let / const / var</span><span class="pill">fn / return</span><span class="pill">if / else</span><span class="pill">while</span><span class="pill">+ - * / %</span><span class="pill">comparisons</span><span class="pill">import aliases</span></div><p class="muted">This is not full TypeScript yet: static type enforcement, arrays/objects, loops beyond <code>while</code>, closures and source-body package modules remain future work. The new native-module path supports third-party executable libraries today.</p></section>
+<section id="plugins" class="section"><h2>03 / Native modules: the extension contract</h2><p>Each module has a logical import name, a `.pmod` manifest, and one platform shared library. The compiler checks exports and emits a qualified target, so `open` from one package won't collide with `open` from another.</p><pre><span class="com"># lib/pipi/extra.pmod (also shipped with its package)</span>
+PIPI-MODULE 1
+name pipi/extra
+kind native-plugin
+abi 1
+exports clamp greet version callCallback</pre><p>Each shared library exports the same entry symbol:</p><pre><span class="kw">const</span> PipiNativeModuleV1 *pipi_native_module_v1(<span class="kw">void</span>);</pre><p>The descriptor supplies the ABI version, module identity, supported-function check, initializer, call dispatcher and shutdown hook. `include/pipi_native.h` is the public C89-compatible header. Function calls exchange `null`, `number`, `string`, `boolean` and named PIPI function values; the host API can invoke PIPI callbacks.</p><h3>Install a module without editing PIPI core</h3><div class="tree"><b>pipi-modules/</b>
+└── your-module/
+    ├── your-module.pmod
+    └── native/
+        ├── windows-x86_64/pipi_your-module.dll
+        └── linux-x86_64/libpipi_your-module.so</div><p>Set <code>PIPI_MODULE_PATH</code> to the directory containing the module packages. For a project-style root with a <code>modules/</code> directory, the loader also searches <code>modules/&lt;name&gt;/native/&lt;platform&gt;/</code>. Compiler manifest search supports <code>PIPI_LIB_PATH</code> and <code>PIPI_MODULE_PATH</code>.</p><pre><span class="com"># Linux</span>
+export PIPI_MODULE_PATH="$HOME/pipi-modules"
+./bin/pipi-c compile app.pipi -o app.pbc
+./bin/pipi-vm app.pbc
+
+<span class="com"># Windows CMD</span>
+set PIPI_MODULE_PATH=C:\dev\pipi-modules
+bin\pipi-c.exe compile app.pipi -o app.pbc
+bin\pipi-vm.exe app.pbc</pre><h3>Wide range of domains</h3><p class="muted">The ABI is domain-agnostic. Framework authors can expose graphics, DirectX/OpenGL/Vulkan, audio/MIDI, keyboard/controller input, networking and HTTP, database drivers, image/audio codecs, compression, cryptography, physics, filesystem, OS APIs, hardware sensors, ML runtimes and specialized tools. Platforms can ship distinct implementations while PIPI imports one logical module name.</p><div class="note"><strong>Security:</strong> native code runs with the same permissions as PIPI. The ABI validates version and module identity; it is not a sandbox. Only load modules you trust.</div></section>
+<section id="pdx" class="section"><h2>04 / PDX 0.8.0 — 2D game framework</h2><p>PDX has grown from a Direct3D 9 drawing proof into an external 2D game framework for PIPI. It adds a frame loop, delta-time timing, FPS pacing, keyboard/mouse input, 2D rectangles/lines/circles, cached text, BMP sprites, sprite-sheet regions and row-major string-grid tilemaps, camera transforms, WAV playback, AABB collision and math helpers. All of that lives in the external native DLL; the PIPI compiler, VM, bytecode and public module ABI remain unchanged.</p><pre><span class="kw">import</span> { open <span class="kw">as</span> pdxOpen, pollEvents, beginFrame, endFrame,
+  fillRect, drawText, keyDown, deltaTime, clamp,
+  close <span class="kw">as</span> pdxClose } <span class="kw">from</span> <span class="str">"pdx"</span>;
+
+<span class="kw">let</span> x = 120;
+<span class="kw">if</span> (pdxOpen(<span class="str">"My PIPI Game"</span>, 800, 600)) {
+  <span class="kw">while</span> (pollEvents()) {
+    <span class="kw">let</span> dt = clamp(deltaTime(), 0.001, 0.05);
+    <span class="kw">if</span> (keyDown(<span class="str">"LEFT"</span>)) { x = x - 220 * dt; }
+    <span class="kw">if</span> (keyDown(<span class="str">"RIGHT"</span>)) { x = x + 220 * dt; }
+    <span class="kw">if</span> (beginFrame(16, 20, 34)) {
+      fillRect(x, 240, 32, 32, 95, 220, 255);
+      drawText(<span class="str">"PIPI + PDX"</span>, 18, 16, 230, 240, 255, 18);
+      endFrame();
+    }
+  }
+  pdxClose();
+}</pre><p>Build the external backend from Windows with MinGW-w64, DirectX 9 headers/import library and WinMM:</p><pre>frameworks\PDX\build.bat
+bin\pipi-vm.exe dist\PIPI_PDX_Demo.pbc</pre><p><a href="pdx/index.html">Open the full PDX game-framework documentation →</a> for all functions, parameter signatures, sprite atlas guide, audio, input and practical limitations.</p><p class="muted">PDX remains an external 0.8.0 framework while the overall PIPI distribution is now v1.0.0. This release adds the C89 standard-library modules and PIPIwood packages without changing the bytecode or native ABI. The Windows DirectX DLL still requires a Windows build for runtime graphics testing.</p></section><section id="bytecode" class="section"><h2>05 / PIPIBC06</h2><p class="muted">New compiler output starts with the 8-byte magic <code>PIPIBC06</code>. The container keeps the v0.5 layout; the VM also accepts <code>PIPIBC05</code> files. Native module targets are constants, so no framework-specific bytecode opcode is needed.</p><table><thead><tr><th>Opcode group</th><th>Operations</th><th>Purpose</th></tr></thead><tbody><tr><td>Value</td><td><code>PUSH_NUM</code>, <code>PUSH_STR</code>, <code>PUSH_BOOL</code>, <code>PUSH_NULL</code></td><td>Push constants</td></tr><tr><td>Variables</td><td><code>LOAD</code>, <code>STORE</code>, <code>DECLARE</code></td><td>Read/write runtime variables</td></tr><tr><td>Math</td><td><code>ADD</code>, <code>SUB</code>, <code>MUL</code>, <code>DIV</code>, <code>MOD</code></td><td>Arithmetic and string concatenation</td></tr><tr><td>Control</td><td><code>JUMP</code>, <code>JFALSE</code>, <code>CALL</code>, <code>RETURN</code>, <code>HALT</code></td><td>Branches, PIPI functions and module calls</td></tr></tbody></table></section>
+<section id="layout" class="section"><h2>06 / Project layout</h2><div class="tree"><b>PIPI_General_Language/</b>
+├── bin/             C89 compiler + virtual machine
+├── include/         public PIPI native-module ABI v1
+├── native/          compatibility GUI bridge source/build
+├── lib/             standard `.pmod` import manifests
+├── stdlib/          portable C89 native library sources
+├── modules/         distributable native module binaries/manifests
+├── dist/woodlibs/   independently installable `.woodlib` archives
+├── frameworks/PDX/  optional Direct3D 9 framework source
+├── examples/        language and native plugin examples
+├── dist/            compiled PIPIBC06 programs
+├── docs/            this standalone HTML site
+└── tests/           compiler/runtime regression suite</div><p class="muted">Tests: <code>python3 -m unittest discover -s tests -v</code>. Python is only a test harness dependency, never a runtime dependency.</p></section>
+<p><a href="stdlib/index.html">Browse all 12 standard libraries and PIPIwood →</a> · <a href="GITHUB.md">Publish PIPI to GitHub</a></p></main><footer class="footer">PIPI distribution v1.0.0 · PIPIBC06 · PDX 0.8 game framework · static call validation</footer>
+</div></body></html>

@@ -1,0 +1,16 @@
+import { print } from "pipi/core";
+import { socketCreate, socketConnect, socketSend, socketRecv, socketClose, socketLastError } from "pipi/net";
+
+/* Start a TCP echo server on 127.0.0.1:7000 before running this client. */
+let sock = socketCreate("tcp");
+if (sock > 0) {
+  if (socketConnect(sock, "127.0.0.1", 7000)) {
+    socketSend(sock, "PIPI socket says hello\n");
+    print(socketRecv(sock, 1024));
+  } else {
+    print("Connect failed: " + socketLastError());
+  }
+  socketClose(sock);
+} else {
+  print("Socket create failed: " + socketLastError());
+}

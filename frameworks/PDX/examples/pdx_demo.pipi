@@ -1,0 +1,94 @@
+// PDX 0.8.0: Neon Arena - a small, playable PIPI game.
+// Move with WASD/arrows, avoid the magenta orb, press ESC to quit.
+import { print } from "pipi/core";
+import {
+  open as pdxOpen, beginFrame, fillRect, drawRect, drawLine, fillCircle, drawCircle,
+  endFrame, pollEvents, setTitle, close as pdxClose, keyDown, keyPressed,
+  deltaTime, setTargetFPS, drawText, rectsOverlap, randomInt, clamp,
+  time, setCamera, resetCamera
+} from "pdx";
+
+let playerX: number = 370;
+let playerY: number = 270;
+let playerSize: number = 28;
+let playerSpeed: number = 250;
+let orbX: number = 180;
+let orbY: number = 180;
+let orbRadius: number = 17;
+let orbVX: number = 185;
+let orbVY: number = 145;
+let score: number = 0;
+let best: number = 0;
+let lastSecond: number = 0;
+let frameDelta: number = 0.016;
+let gameTime: number = 0;
+
+if (pdxOpen("PDX 0.8 | Neon Arena", 800, 600)) {
+  setTargetFPS(60);
+  print("PDX Neon Arena: use WASD or arrow keys; ESC exits.");
+  while (pollEvents()) {
+    frameDelta = clamp(deltaTime(), 0.001, 0.05);
+    gameTime = time();
+
+    if (keyPressed("ESCAPE")) {
+      pdxClose();
+    } else {
+      if (keyDown("LEFT") || keyDown("A")) { playerX = playerX - playerSpeed * frameDelta; }
+      if (keyDown("RIGHT") || keyDown("D")) { playerX = playerX + playerSpeed * frameDelta; }
+      if (keyDown("UP") || keyDown("W")) { playerY = playerY - playerSpeed * frameDelta; }
+      if (keyDown("DOWN") || keyDown("S")) { playerY = playerY + playerSpeed * frameDelta; }
+
+      playerX = clamp(playerX, 24, 748);
+      playerY = clamp(playerY, 52, 548);
+      orbX = orbX + orbVX * frameDelta;
+      orbY = orbY + orbVY * frameDelta;
+      if (orbX < orbRadius + 8) { orbX = orbRadius + 8; orbVX = 0 - orbVX; }
+      if (orbX > 792 - orbRadius) { orbX = 792 - orbRadius; orbVX = 0 - orbVX; }
+      if (orbY < orbRadius + 44) { orbY = orbRadius + 44; orbVY = 0 - orbVY; }
+      if (orbY > 592 - orbRadius) { orbY = 592 - orbRadius; orbVY = 0 - orbVY; }
+
+      if (gameTime >= lastSecond + 1) {
+        lastSecond = lastSecond + 1;
+        setTitle("PDX Neon Arena | score " + score + " | time " + lastSecond + "s");
+      }
+
+      if (rectsOverlap(playerX, playerY, playerSize, playerSize,
+                       orbX - orbRadius, orbY - orbRadius, orbRadius * 2, orbRadius * 2)) {
+        score = score + 1;
+        if (score > best) { best = score; }
+        orbX = randomInt(80, 720);
+        orbY = randomInt(100, 500);
+        orbVX = randomInt(110, 230);
+        orbVY = randomInt(90, 210);
+        if (randomInt(0, 1) == 0) { orbVX = 0 - orbVX; }
+        if (randomInt(0, 1) == 0) { orbVY = 0 - orbVY; }
+        setTitle("PDX Neon Arena | score " + score);
+      }
+
+      if (beginFrame(10, 12, 24)) {
+        // Arena frame and lane markers.
+        drawRect(8, 8, 784, 584, 38, 53, 78);
+        drawLine(0, 44, 800, 44, 45, 56, 82);
+        drawLine(0, 548, 800, 548, 45, 56, 82);
+        fillRect(18, 46, 3, 500, 45, 56, 82);
+        fillRect(779, 46, 3, 500, 45, 56, 82);
+
+        // Player, orb and an outline glow.
+        fillRect(playerX, playerY, playerSize, playerSize, 67, 222, 255);
+        drawRect(playerX - 3, playerY - 3, playerSize + 6, playerSize + 6, 180, 245, 255);
+        fillCircle(orbX, orbY, orbRadius, 255, 55, 145);
+        drawCircle(orbX, orbY, orbRadius + 5, 255, 142, 196);
+
+        // HUD uses screen coordinates; camera is reset intentionally.
+        resetCamera();
+        drawText("PDX 0.8 / NEON ARENA", 20, 13, 230, 238, 255, 18);
+        drawText("SCORE: " + score, 610, 13, 255, 102, 180, 18);
+        drawText("BEST: " + best, 500, 13, 130, 235, 255, 16);
+        drawText("MOVE: WASD / ARROWS    ESC: QUIT", 22, 559, 160, 174, 204, 14);
+        drawText("SURVIVE. DODGE. SCORE.", 585, 559, 160, 174, 204, 14);
+        endFrame();
+      }
+    }
+  }
+  pdxClose();
+}

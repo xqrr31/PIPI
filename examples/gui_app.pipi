@@ -1,0 +1,20 @@
+import { print } from "pipi/core";
+import { window, label, button, show, run, message } from "pipi/gui";
+
+const APP_TITLE: string = "PIPI Native GUI";
+let clicks: number = 0;
+
+fn onFreakClick() {
+  clicks = clicks + 1;
+  print("button clicked " + clicks + " time(s)");
+  message(app, "We are so back", "PIPI callback fired. Click count: " + clicks);
+}
+
+let app = window(APP_TITLE, 640, 420);
+label(app, "PIPI is a general-purpose language now.", 28, 36);
+label(app, "This window is native: X11 on Linux, Win32 on Windows.", 28, 64);
+button(app, "Click me, bestie", 28, 110, onFreakClick);
+button(app, "Print a vibe", 28, 154, onFreakClick);
+show(app);
+print("Window opened. Close it to exit.");
+run(app);

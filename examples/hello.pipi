@@ -1,0 +1,11 @@
+import { print } from "pipi/core";
+
+const greeting: string = "PIPI is alive";
+let release: number = 2;
+print(greeting + " — version " + release);
+
+fn square(n: number): number {
+  return n * n;
+}
+
+print("square(9) = " + square(9));

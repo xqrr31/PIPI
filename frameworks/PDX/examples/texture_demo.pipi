@@ -1,0 +1,36 @@
+// PDX texture/sprite-sheet example. Start from the PIPI project root.
+import { open as pdxOpen, pollEvents, beginFrame, endFrame, close as pdxClose,
+         drawTexture, drawTextureRegion, drawTilemap, loadTexture, textureWidth, textureHeight,
+         keyDown, deltaTime, clamp, drawText, fillRect, setTargetFPS } from "pdx";
+
+let atlas: number = 0;
+let ship: number = 0;
+let shipX: number = 300;
+let dt: number = 0.016;
+if (pdxOpen("PDX 0.8 | Sprite Lab", 800, 500)) {
+  atlas = loadTexture("frameworks/PDX/assets/pdx_atlas.bmp");
+  ship = loadTexture("frameworks/PDX/assets/ship.bmp");
+  setTargetFPS(60);
+  while (pollEvents()) {
+    dt = clamp(deltaTime(), 0.001, 0.05);
+    if (keyDown("LEFT") || keyDown("A")) { shipX = shipX - 220 * dt; }
+    if (keyDown("RIGHT") || keyDown("D")) { shipX = shipX + 220 * dt; }
+    shipX = clamp(shipX, 0, 760);
+    if (beginFrame(12, 14, 25)) {
+      fillRect(0, 430, 800, 70, 25, 33, 52);
+      // A 12x5 tilemap encoded as one flat row-major string (3 = wall, 2 = grass).
+      drawTilemap(atlas, "333333333333322222222223222222222223222222222223333333333333", 12, 5, 32, 80, 100, 1.25);
+      // Four sprites in one horizontal 4-frame atlas.
+      drawTextureRegion(atlas, 590, 110, 40, 40, 0.0, 0.0, 0.25, 1.0);
+      drawTextureRegion(atlas, 640, 110, 40, 40, 0.25, 0.0, 0.25, 1.0);
+      drawTextureRegion(atlas, 690, 110, 40, 40, 0.50, 0.0, 0.25, 1.0);
+      drawTextureRegion(atlas, 740, 110, 40, 40, 0.75, 0.0, 0.25, 1.0);
+      drawTexture(ship, shipX, 360, 40, 40);
+      drawText("SPRITE LAB / MAGENTA COLOR KEY", 18, 16, 235, 240, 255, 18);
+      drawText("ATLAS: " + textureWidth(atlas) + " x " + textureHeight(atlas), 18, 52, 160, 185, 220, 14);
+      drawText("TILEMAP + ATLAS + MOVING SPRITE", 18, 453, 180, 200, 230, 14);
+      endFrame();
+    }
+  }
+  pdxClose();
+}

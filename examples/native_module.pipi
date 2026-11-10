@@ -1,0 +1,12 @@
+import { print } from "pipi/core";
+import { clamp as limit, greet, version, callCallback } from "pipi/extra";
+
+fn onPulse(value) {
+    print("plugin called back into PIPI with " + value);
+    return value + 1;
+}
+
+print(version());
+print(greet("the framework creator"));
+print("clamp(27, 0, 10) = " + limit(27, 0, 10));
+print("callback result = " + callCallback(onPulse, 8));

@@ -1,0 +1,24 @@
+name: PIPI CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  linux-c89:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install native GUI headers
+        run: sudo apt-get update && sudo apt-get install -y libx11-dev
+      - name: Set up Python for tests
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Strict C89 build
+        env:
+          CC: clang
+        run: ./build.sh
+      - name: Regression tests
+        run: python3 -m unittest discover -s tests -v

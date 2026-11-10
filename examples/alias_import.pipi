@@ -1,0 +1,5 @@
+import { print as say } from "pipi/core";
+import { sqrt as root } from "pipi/math";
+
+say("PIPI aliases work");
+say("root(144) = " + root(144));

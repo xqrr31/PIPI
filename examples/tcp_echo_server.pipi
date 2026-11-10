@@ -1,0 +1,24 @@
+import { print } from "pipi/core";
+import { socketCreate, socketSetReuse, socketBind, socketListen, socketAccept, socketRecv, socketSend, socketClose, socketLastError } from "pipi/net";
+
+let server = socketCreate("tcp");
+socketSetReuse(server, true);
+if (socketBind(server, "0.0.0.0", 7000)) {
+  if (socketListen(server, 8)) {
+    print("PIPI echo server listening on :7000");
+    while (true) {
+      let client = socketAccept(server);
+      if (client > 0) {
+        let message = socketRecv(client, 1024);
+        print("client: " + message);
+        socketSend(client, "PIPI echo: " + message);
+        socketClose(client);
+      }
+    }
+  } else {
+    print("listen failed: " + socketLastError());
+  }
+} else {
+  print("bind failed: " + socketLastError());
+}
+socketClose(server);
